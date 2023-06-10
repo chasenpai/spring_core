@@ -20,14 +20,17 @@ public class OrderServiceImpl implements OrderService {
      *
      * DIP 를 위반하지 않도록 인터페이스에만 의존하게 의존관계를 변경하면 된다
      * - 구현 객체를 생성하고, 연결하는 책임을 가지는 별도의 설정 클래스가 필요
-    */
+     */
     //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
     //private  final DiscountPolicy discountPolicy = new RateDiscountPolicy();
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
     /**
-     * OrderServiceImpl 은 생성자를 통해 어떤 구현 객체가 들어올지 알 수 없다
+     * 프로그램 제어 흐름에 대한 권한은 모두 AppConfig 가 가지고 있다
+     * OrderServiceImpl 은 생성자를 통해 어떤 구현 객체가 들어올지 알 수 없고
+     * 그저 자신의 로직을 실행할 뿐이다
+     * - 제어의 역전(IoC)
      */
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
