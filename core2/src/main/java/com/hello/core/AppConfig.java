@@ -22,16 +22,19 @@ public class AppConfig {
 
     @Bean
     public MemberService memberService() { //기본적으로 메소드 이름으로 빈이 등록 된다(빈 이름은 중복되면 안됌)
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
