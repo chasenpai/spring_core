@@ -3,7 +3,10 @@ package com.hello.core.order;
 import com.hello.core.discount.DiscountPolicy;
 import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
     /**
@@ -32,6 +35,12 @@ public class OrderServiceImpl implements OrderService {
      * 그저 자신의 로직을 실행할 뿐이다
      * - 제어의 역전(IoC)
      */
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
+
+    @Autowired //의존관계 자동 주입
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
