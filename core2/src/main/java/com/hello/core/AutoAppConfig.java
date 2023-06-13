@@ -41,19 +41,19 @@ public class AutoAppConfig {
          *
          * 스프링 부트는 기본값으로 빈 오버라이딩이 false 로 되어 있다
          */
-        @Bean(name = "memoryMemberRepository")
-        MemberRepository memberRepository(){
-            return new MemoryMemberRepository();
-        }
-
-        @Autowired
-        MemberRepository memberRepository;
-        @Autowired
-        DiscountPolicy discountPolicy;
-
-        @Bean
-        OrderService orderService(){
-            return new OrderServiceImpl(memberRepository, discountPolicy);
-        }
+//        @Bean(name = "memoryMemberRepository")
+//        MemberRepository memberRepository(){
+//            return new MemoryMemberRepository();
+//        }
+//
+//        @Autowired
+//        MemberRepository memberRepository;
+//        @Autowired
+//        DiscountPolicy discountPolicy;
+//
+//        @Bean
+//        OrderService orderService(){
+//            return new OrderServiceImpl(memberRepository, discountPolicy);
+//        }
 
 }

@@ -3,10 +3,19 @@ package com.hello.core.order;
 import com.hello.core.discount.DiscountPolicy;
 import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+/**
+ * @RequiredArgsConstructor
+ * - final 키워드가 붙은 필드로 자동으로 생성자를 만들어줌
+ * - 생성자가 딱 한개라면 @Autowired 생략 가능
+ * - 생성자를 딱 한개만 두고 @Autowired 를 생략하는 방법을 주로 사용한다
+ * - 코드가 깔끔해지고 의존성 주입이 편해진다
+ */
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     /**
@@ -30,6 +39,15 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+//    @Autowired
+//    public void setMemberRepository(MemberRepository memberRepository){
+//        this.memberRepository = memberRepository;
+//    }
+//    @Autowired
+//    public void setDiscountPolicy(DiscountPolicy discountPolicy){
+//        this.discountPolicy = discountPolicy;
+//    }
+
     /**
      * 프로그램 제어 흐름에 대한 권한은 모두 AppConfig 가 가지고 있다
      * OrderServiceImpl 은 생성자를 통해 어떤 구현 객체가 들어올지 알 수 없고
@@ -48,11 +66,11 @@ public class OrderServiceImpl implements OrderService {
      * - 생성자가 딱 한 개만 있다면  @Autowired 를 생략해도 된다(빈으로 등록된 경우)
      * - 빈을 등록하면서 의존관계 주입도 같이 일어난다
      */
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     /**
      * 필드 주입
