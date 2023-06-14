@@ -5,6 +5,7 @@ import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
  * - 생성자를 딱 한개만 두고 @Autowired 를 생략하는 방법을 주로 사용한다
  * - 코드가 깔끔해지고 의존성 주입이 편해진다
  */
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     /**
@@ -65,12 +66,27 @@ public class OrderServiceImpl implements OrderService {
      * - 불변, 필수 의존관계에 사용
      * - 생성자가 딱 한 개만 있다면  @Autowired 를 생략해도 된다(빈으로 등록된 경우)
      * - 빈을 등록하면서 의존관계 주입도 같이 일어난다
+     *
+     * 조회 빈이 2개 이상 문제
+     * - @Autowired 는 Type 으로 조회한다
+     * - FixDiscountPolicy, RateDiscountPolicy 둘다 빈 등록 시 NoUniqueBeanDefinitionException 발생
+     * - @Autowired 는 타입 매칭을 시도하고 이때 여러 빈이 있으면 필드 이름, 파라미터 이름으로 빈 이름을 추가 매칭한다
+     *
+     * @Qualifier 사용
+     *  - 추가 구분자를 붙여주는 방법으로, 주입 시 추가적인 방법을 제공하는 것이지 빈 이름을 변경하는 것은 아님
+     *  - 만약 @Qualifier("mainDiscountPolicy") 를 못찾으면 mainDiscountPolicy 라는 이름의 빈을 추가로 찾는다
+     *  - 단점으로는 주입 받을 때 모든 코드에 어노테이션을 붙여줘야 한다
+     *
+     * @Primary 사용
+     * - 우선 순위를 지정하는 방법으로, @Primary 가 붙은 빈이 우선권을 가진다
+     * - 스프링은 자동보다 수동이, 넓은 범위의 선택권 보다는 좁은 범위의 선택권이 우선 순위가 높다
+     * - 따라서 @Primary 보다 @Qualifier 의 우선 순위가 높다
      */
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     /**
      * 필드 주입
