@@ -1,5 +1,6 @@
 package com.hello.core.order;
 
+import com.hello.core.annotation.MainDiscountPolicy;
 import com.hello.core.discount.DiscountPolicy;
 import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
@@ -76,6 +77,8 @@ public class OrderServiceImpl implements OrderService {
      *  - 추가 구분자를 붙여주는 방법으로, 주입 시 추가적인 방법을 제공하는 것이지 빈 이름을 변경하는 것은 아님
      *  - 만약 @Qualifier("mainDiscountPolicy") 를 못찾으면 mainDiscountPolicy 라는 이름의 빈을 추가로 찾는다
      *  - 단점으로는 주입 받을 때 모든 코드에 어노테이션을 붙여줘야 한다
+     *  - 문자로 구분하기 때문에 컴파일 시 타입 체크가 안된다. 커스텀 어노테이션으로 해결 가능
+     *  - 그 외 @Autowired 도 어노테이션으로 재정의할 수 있지만, 무분별한 재정의는 유지보수에 혼란을 줄 수 있다
      *
      * @Primary 사용
      * - 우선 순위를 지정하는 방법으로, @Primary 가 붙은 빈이 우선권을 가진다
@@ -83,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
      * - 따라서 @Primary 보다 @Qualifier 의 우선 순위가 높다
      */
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
